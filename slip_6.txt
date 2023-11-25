@@ -1,0 +1,108 @@
+Q1.
+
+public class Employee {
+    private int empId;
+    private String empName;
+    private String empDesignation;
+    private double empSalary;
+
+    // Parameterized constructor
+    public Employee(int empId, String empName, String empDesignation, double empSalary) {
+        this.empId = empId;
+        this.empName = empName;
+        this.empDesignation = empDesignation;
+        this.empSalary = empSalary;
+    }
+
+    // Override toString() method to display employee information
+    @Override
+    public String toString() {
+        return String.format("Employee ID: %d%nEmployee Name: %s%nDesignation: %s%nSalary: %.2f%n",
+                empId, empName, empDesignation, empSalary);
+    }
+
+    public static void main(String[] args) {
+        // Create an Employee object
+        Employee employee = new Employee(101, "John Doe", "Software Engineer", 60000.0);
+
+        // Display employee information using toString() method
+        System.out.println(employee);
+    }
+}
+
+Q2.
+
+import java.util.Scanner;
+
+abstract class Order {
+    protected int id;
+    protected String description;
+
+    public Order(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
+    abstract void accept();
+    abstract void display();
+}
+
+class PurchaseOrder extends Order {
+    private String customerName;
+
+    public PurchaseOrder(int id, String description) {
+        super(id, description);
+    }
+
+    @Override
+    void accept() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter customer name for Purchase Order: ");
+        customerName = scanner.nextLine();
+    }
+
+    @Override
+    void display() {
+        System.out.println("Purchase Order Details:\nOrder ID: " + id + "\nDescription: " + description +
+                "\nCustomer Name: " + customerName + "\n");
+    }
+}
+
+class SalesOrder extends Order {
+    private String vendorName;
+
+    public SalesOrder(int id, String description) {
+        super(id, description);
+    }
+
+    @Override
+    void accept() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter vendor name for Sales Order: ");
+        vendorName = scanner.nextLine();
+    }
+
+    @Override
+    void display() {
+        System.out.println("Sales Order Details:\nOrder ID: " + id + "\nDescription: " + description +
+                "\nVendor Name: " + vendorName + "\n");
+    }
+}
+
+public class OrderDemo {
+    public static void main(String[] args) {
+        Order[] orders = {
+                new PurchaseOrder(1, "Office Supplies"),
+                new PurchaseOrder(2, "Computer Equipment"),
+                new PurchaseOrder(3, "Furniture"),
+                new SalesOrder(101, "Electronics"),
+                new SalesOrder(102, "Clothing"),
+                new SalesOrder(103, "Appliances")
+        };
+
+        for (Order order : orders) {
+            order.accept();
+            order.display();
+        }
+    }
+}

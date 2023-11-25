@@ -1,0 +1,79 @@
+Slip 20
+Q1
+
+Certainly! Below is a Java program illustrating multilevel inheritance with `Continent`, `Country`, and `State` classes. Each class inherits from the one above in the hierarchy, and the program displays the place, state, country, and continent.
+
+java
+class Continent {
+    String continentName;
+
+    public Continent(String name) {
+        this.continentName = name;
+    }
+
+    public void displayContinent() {
+        System.out.println("Continent: " + continentName);
+    }
+}
+
+class Country extends Continent {
+    String countryName;
+
+    public Country(String continentName, String countryName) {
+        super(continentName);
+        this.countryName = countryName;
+    }
+
+    public void displayCountry() {
+        displayContinent();
+        System.out.println("Country: " + countryName);
+    }
+}
+
+class State extends Country {
+    String stateName;
+
+    public State(String continentName, String countryName, String stateName) {
+        super(continentName, countryName);
+        this.stateName = stateName;
+    }
+
+    public void displayState() {
+        displayCountry();
+        System.out.println("State: " + stateName);
+    }
+}
+
+public class PlaceHierarchy {
+    public static void main(String[] args) {
+        // Create an instance of State
+        State myState = new State("North America", "United States", "New York");
+
+        // Display information
+        myState.displayState();
+    }
+}
+
+Q2 
+// File: Operation/Addition.java
+package Operation;
+
+public class Addition {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public float subtract(float x, float y) {
+        return x - y;
+    }
+}
+
+// File: Operation/Maximum.java
+package Operation;
+
+public class Maximum {
+    public void max(int num1, int num2) {
+        int max = (num1 > num2) ? num1 : num2;
+        System.out.println("Maximum: " + max);
+    }
+}

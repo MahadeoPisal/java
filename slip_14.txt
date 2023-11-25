@@ -1,0 +1,117 @@
+Slip 14
+Q1
+
+import java.util.Scanner;
+
+// Custom exception class for zero
+class ZeroException extends Exception {
+    public ZeroException(String message) {
+        super(message);
+    }
+}
+
+public class PrimeChecker {
+    // Static method to check whether a number is prime
+    public static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            // Accept a number from the user
+            System.out.print("Enter a number: ");
+            int userInput = scanner.nextInt();
+
+            // Check for zero and throw exception
+            if (userInput == 0) {
+                throw new ZeroException("Number is 0");
+            }
+
+            // Check whether the number is prime
+            if (isPrime(userInput)) {
+                System.out.println(userInput + " is a prime number.");
+            } else {
+                System.out.println(userInput + " is not a prime number.");
+            }
+        } catch (ZeroException ze) {
+            System.out.println(ze.getMessage());
+        }
+    }
+}
+
+Q2
+
+// SY/SYMarks.java
+package SY;
+
+public class SYMarks {
+    int computerTotal, mathsTotal, electronicsTotal;
+    public SYMarks(int computerTotal, int mathsTotal, int electronicsTotal) {
+        this.computerTotal = computerTotal;
+        this.mathsTotal = mathsTotal;
+        this.electronicsTotal = electronicsTotal;
+    }
+}
+
+// TY/TYMarks.java
+package TY;
+
+public class TYMarks {
+    int theory, practicals;
+    public TYMarks(int theory, int practicals) {
+        this.theory = theory;
+        this.practicals = practicals;
+    }
+}
+
+// Student.java
+import SY.SYMarks;
+import TY.TYMarks;
+
+class Student {
+    private int rollNumber;
+    private String name;
+    private SYMarks syMarks;
+    private TYMarks tyMarks;
+
+    public Student(int rollNumber, String name, SYMarks syMarks, TYMarks tyMarks) {
+        this.rollNumber = rollNumber;
+        this.name = name;
+        this.syMarks = syMarks;
+        this.tyMarks = tyMarks;
+    }
+
+    public void displayResult() {
+        int totalComputerMarks = syMarks.computerTotal + tyMarks.theory;
+        int totalMarks = totalComputerMarks + syMarks.mathsTotal + syMarks.electronicsTotal + tyMarks.practicals;
+
+        char grade = (totalMarks >= 70) ? 'A' : (totalMarks >= 60) ? 'B' : (totalMarks >= 50) ? 'C' : (totalMarks >= 40) ? 'P' : 'F';
+
+        System.out.println("Roll Number: " + rollNumber + "\nName: " + name + "\nTotal Computer Marks (SY + TY): " + totalComputerMarks +
+                "\nTotal Marks: " + totalMarks + "\nGrade: " + grade + "\n-----------------------------");
+    }
+}
+
+// StudentResultApp.java
+import SY.SYMarks;
+import TY.TYMarks;
+
+public class StudentResultApp {
+    public static void main(String[] args) {
+        Student student1 = new Student(101, "John Doe", new SYMarks(80, 75, 85), new TYMarks(65, 70));
+        student1.displayResult();
+
+        Student student2 = new Student(102, "Jane Smith", new SYMarks(70, 60, 80), new TYMarks(55, 50));
+        student2.displayResult();
+    }
+}

@@ -1,0 +1,75 @@
+Q1. 
+// Functional interface with a single abstract method
+interface CubeCalculator {
+    int calculateCube(int number);
+}
+
+public class CubeProgram {
+    public static void main(String[] args) {
+        // Using a lambda expression to implement the functional interface
+        CubeCalculator cubeCalculator = number -> number * number * number;
+
+        // Test the functional interface
+        int number = 5;
+        int cube = cubeCalculator.calculateCube(number);
+
+        System.out.println("Cube of " + number + " is: " + cube);
+    }
+}
+
+Q2.
+
+package 1
+package student;
+
+public class StudentInfo {
+    public void displayInfo(int rollNo, String className, double percentage) {
+        System.out.println("Student Information:");
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Class: " + className);
+        System.out.println("Percentage: " + percentage + "%");
+    }
+}
+ package 2
+package student;
+import java.util.Scanner;
+
+public class StudentPer {
+    public double calculatePercentage() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the marks for 6 subjects (separated by spaces): ");
+        double[] marks = new double[6];
+
+        for (int i = 0; i < 6; i++) {
+            marks[i] = scanner.nextDouble();
+        }
+
+        // Calculate percentage
+        double totalMarks = 0;
+        for (double mark : marks) {
+            totalMarks += mark;
+        }
+        return (totalMarks / (6 * 100)) * 100;
+    }
+}
+
+package 3
+
+import student.StudentInfo;
+import student.StudentPer;
+
+public class MainProgram {
+    public static void main(String[] args) {
+        // Accept student details
+        int rollNo = 101;
+        String className = "10th";
+
+        StudentPer studentPer = new StudentPer();
+        double percentage = studentPer.calculatePercentage();
+
+        // Display student information
+        StudentInfo studentInfo = new StudentInfo();
+        studentInfo.displayInfo(rollNo, className, percentage);
+    }
+}

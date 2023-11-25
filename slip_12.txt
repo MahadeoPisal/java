@@ -1,0 +1,118 @@
+Slip 12 
+
+Q1.
+class College {
+    protected int cno;
+    protected String cname;
+    protected String caddr;
+
+    // Constructor for College class
+    public College(int cno, String cname, String caddr) {
+        this.cno = cno;
+        this.cname = cname;
+        this.caddr = caddr;
+    }
+
+    // Method to display College details
+    public void displayCollegeDetails() {
+        System.out.println("College Number: " + cno);
+        System.out.println("College Name: " + cname);
+        System.out.println("College Address: " + caddr);
+    }
+}
+
+class Department extends College {
+    protected int dno;
+    protected String dname;
+
+    // Constructor for Department class
+    public Department(int cno, String cname, String caddr, int dno, String dname) {
+        super(cno, cname, caddr);
+        this.dno = dno;
+        this.dname = dname;
+    }
+
+    // Method to display Department details
+    public void displayDepartmentDetails() {
+        displayCollegeDetails(); // Call the display method of the parent class
+        System.out.println("Department Number: " + dno);
+        System.out.println("Department Name: " + dname);
+    }
+}
+
+public class CollegeDepartmentProgram {
+    public static void main(String[] args) {
+        // Create an instance of the Department class
+        Department myDepartment = new Department(1, "ABC College", "123 Main St", 101, "Computer Science");
+
+        // Display College and Department details
+        myDepartment.displayDepartmentDetails();
+    }
+}
+Q2
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SimpleCalculator extends JFrame {
+    private JTextField resultField;
+    private double num1, num2, result;
+    private char operator;
+
+    public SimpleCalculator() {
+        setTitle("Simple Calculator");
+        setSize(300, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(4, 4));
+
+        resultField = new JTextField();
+        resultField.setHorizontalAlignment(JTextField.RIGHT);
+        resultField.setEditable(false);
+
+        JButton[] digitButtons = new JButton[10];
+        for (int i = 0; i < 10; i++) {
+            digitButtons[i] = new JButton(Integer.toString(i));
+            digitButtons[i].addActionListener(e -> resultField.setText(resultField.getText() + ((JButton) e.getSource()).getText()));
+        }
+
+        String[] operators = {"+", "-", "*", "/", ".", "="};
+        for (String op : operators) {
+            JButton button = new JButton(op);
+            button.addActionListener(new OperatorButtonListener());
+            add(button);
+        }
+
+        add(resultField);
+        for (int i = 1; i <= 9; i++) {
+            add(digitButtons[i]);
+        }
+
+        setVisible(true);
+    }
+
+    private class OperatorButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            if (!source.getText().equals("=")) {
+                num1 = Double.parseDouble(resultField.getText());
+                operator = source.getText().charAt(0);
+                resultField.setText("");
+            } else {
+                num2 = Double.parseDouble(resultField.getText());
+                switch (operator) {
+                    case '+': result = num1 + num2; break;
+                    case '-': result = num1 - num2; break;
+                    case '*': result = num1 * num2; break;
+                    case '/': result = (num2 != 0) ? num1 / num2 : Double.NaN; break;
+                }
+                resultField.setText(String.valueOf(result));
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new SimpleCalculator());
+    }
+}

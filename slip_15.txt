@@ -1,0 +1,128 @@
+Slip 15 
+Q1
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class FileCopy {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Accept file names
+        System.out.print("Enter the name of the source file: ");
+        String sourceFileName = scanner.nextLine();
+
+        System.out.print("Enter the name of the destination file: ");
+        String destinationFileName = scanner.nextLine();
+
+        // Copy contents from the source file to the destination file
+        try {
+            copyFileContents(sourceFileName, destinationFileName);
+            System.out.println("Contents copied successfully!");
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    // Method to copy contents from one file to another
+    private static void copyFileContents(String sourceFileName, String destinationFileName) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(sourceFileName));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(destinationFileName))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Assuming each line contains Book name and Author name separated by a comma
+                // Modify accordingly based on your file format
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    String bookName = parts[0].trim();
+                    String authorName = parts[1].trim();
+
+                    // Copy the content to the destination file
+                    writer.write("Book: " + bookName + ", Author: " + authorName);
+                    writer.newLine();
+                }
+            }
+        }
+    }
+}
+
+Q2
+
+class Account {
+    protected String custName;
+    protected int accNo;
+
+    public Account() {
+        custName = "Unknown";
+        accNo = 0;
+    }
+
+    public Account(String custName, int accNo) {
+        this.custName = custName;
+        this.accNo = accNo;
+    }
+
+    public void displayDetails() {
+        System.out.println("Customer Name: " + custName);
+        System.out.println("Account Number: " + accNo);
+    }
+}
+
+class SavingAccount extends Account {
+    protected double savingBal;
+    protected double minBal;
+
+    public SavingAccount() {
+        super();
+        savingBal = 0.0;
+        minBal = 0.0;
+    }
+
+    public SavingAccount(String custName, int accNo, double savingBal, double minBal) {
+        super(custName, accNo);
+        this.savingBal = savingBal;
+        this.minBal = minBal;
+    }
+
+    public void displayDetails() {
+        super.displayDetails();
+        System.out.println("Saving Balance: $" + savingBal);
+        System.out.println("Minimum Balance: $" + minBal);
+    }
+}
+
+class AccountDetail extends SavingAccount {
+    protected double depositAmt;
+    protected double withdrawalAmt;
+
+    public AccountDetail() {
+        super();
+        depositAmt = 0.0;
+        withdrawalAmt = 0.0;
+    }
+
+    public AccountDetail(String custName, int accNo, double savingBal, double minBal,
+                         double depositAmt, double withdrawalAmt) {
+        super(custName, accNo, savingBal, minBal);
+        this.depositAmt = depositAmt;
+        this.withdrawalAmt = withdrawalAmt;
+    }
+
+    public void displayDetails() {
+        super.displayDetails();
+        System.out.println("Deposit Amount: $" + depositAmt);
+        System.out.println("Withdrawal Amount: $" + withdrawalAmt);
+    }
+}
+
+public class AccountDetailsApp {
+    public static void main(String[] args) {
+        AccountDetail account1 = new AccountDetail("John Doe", 123456, 5000.0, 1000.0, 2000.0, 500.0);
+        account1.displayDetails();
+    }
+}

@@ -1,0 +1,131 @@
+Q1.
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class SortCities {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of cities (n): ");
+        int n = scanner.nextInt();
+
+        // Create an array to store the names of cities
+        String[] cities = new String[n];
+
+        // Input city names
+        System.out.println("Enter the names of cities:");
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("City " + (i + 1) + ": ");
+            cities[i] = scanner.next();
+        }
+
+        // Sort the array in ascending order
+        Arrays.sort(cities);
+
+        // Display the sorted city names
+        System.out.println("Cities in ascending order:");
+
+        for (String city : cities) {
+            System.out.println(city);
+        }
+    }
+}
+
+Q2.import java.util.Arrays;
+import java.util.Scanner;
+
+public class MatrixOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Matrix Operations Menu:\n1. Addition\n2. Multiplication\n3. Exit");
+            System.out.print("Enter your choice (1, 2, or 3): ");
+            int choice = scanner.nextInt();
+
+            if (choice == 3) {
+                System.out.println("Exiting. Goodbye!");
+                break;
+            }
+
+            switch (choice) {
+                case 1:
+                    performMatrixOperation("Addition", MatrixOperations::addMatrices);
+                    break;
+                case 2:
+                    performMatrixOperation("Multiplication", MatrixOperations::multiplyMatrices);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    private static void performMatrixOperation(String operation, MatrixFunction matrixFunction) {
+        int[][] matrix1 = inputMatrix("first");
+        int[][] matrix2 = inputMatrix("second");
+
+        if (matrixFunction.canPerform(matrix1, matrix2)) {
+            displayMatrix(String.format("Resultant Matrix (%s):", operation), matrixFunction.apply(matrix1, matrix2));
+        } else {
+            System.out.println("Matrices cannot be " + operation.toLowerCase() + ". Check dimensions.");
+        }
+    }
+
+    private static int[][] inputMatrix(String ordinal) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the dimensions of the " + ordinal + " matrix:");
+        int rows = scanner.nextInt(), columns = scanner.nextInt();
+        int[][] matrix = new int[rows][columns];
+
+        System.out.println("Enter the elements of the " + ordinal + " matrix:");
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < columns; j++)
+                matrix[i][j] = scanner.nextInt();
+
+        return matrix;
+    }
+
+    private static void displayMatrix(String message, int[][] matrix) {
+        System.out.println(message);
+        Arrays.stream(matrix).map(row -> Arrays.toString(row).replaceAll("[\\[\\],]", ""))
+                .forEach(System.out::println);
+    }
+
+    interface MatrixFunction {
+        boolean canPerform(int[][] matrix1, int[][] matrix2);
+        int[][] apply(int[][] matrix1, int[][] matrix2);
+    }
+
+    private static class MatrixAddition implements MatrixFunction {
+        @Override
+        public boolean canPerform(int[][] matrix1, int[][] matrix2) {
+            return matrix1.length == matrix2.length && matrix1[0].length == matrix2[0].length;
+        }
+
+        @Override
+        public int[][] apply(int[][] matrix1, int[][] matrix2) {
+            return Arrays.stream(matrix1).map(row1 -> IntStream.range(0, row1.length)
+                    .mapToObj(j -> row1[j] + matrix2[i][j]).toArray()).toArray(int[][]::new);
+        }
+    }
+
+    private static class MatrixMultiplication implements MatrixFunction {
+        @Override
+        public boolean canPerform(int[][] matrix1, int[][] matrix2) {
+            return matrix1[0].length == matrix2.length;
+        }
+
+        @Override
+        public int[][] apply(int[][] matrix1, int[][] matrix2) {
+            return IntStream.range(0, matrix1.length).mapToObj(i ->
+                    IntStream.range(0, matrix2[0].length).mapToObj(j ->
+                            IntStream.range(0, matrix1[0].length).map(k -> matrix1[i][k] * matrix2[k][j]).sum())
+                            .toArray()).toArray(int[][]::new);
+        }
+    }
+}

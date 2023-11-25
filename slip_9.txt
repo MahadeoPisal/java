@@ -1,0 +1,103 @@
+Q1.
+
+import java.util.Scanner;
+
+public class Clock {
+    private int hours;
+    private int minutes;
+    private int seconds;
+    private String amPmMode;
+
+    public Clock() {
+        setClock(0, 0, 0);
+    }
+
+    public Clock(int hours, int minutes, int seconds) {
+        setClock(hours, minutes, seconds);
+    }
+
+    private boolean isValidTime(int hours, int minutes, int seconds) {
+        return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60 && seconds >= 0 && seconds < 60;
+    }
+
+    public void setClock(int hours, int minutes, int seconds) {
+        if (isValidTime(hours, minutes, seconds)) {
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+            amPmMode = (hours >= 12) ? "PM" : "AM";
+            if (hours > 12) this.hours %= 12;
+        } else System.out.println("Invalid time input. Please provide valid hours, minutes, and seconds.");
+    }
+
+    public void acceptTime() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter hours: ");
+        setClock(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+    }
+
+    public void displayTime() {
+        System.out.printf("Time: %02d:%02d:%02d %s%n", hours, minutes, seconds, amPmMode);
+    }
+
+    public static void main(String[] args) {
+        Clock myClock = new Clock();
+        myClock.acceptTime();
+        myClock.displayTime();
+    }
+}
+
+Q2.
+interface Displayable {
+    // Marker interface for objects that can be displayed
+}
+
+class Product implements Displayable {
+    private static int objectCount = 0;
+    private int productId;
+    private String productName;
+    private double productCost;
+    private int productQuantity;
+
+    public Product() {
+        objectCount++;
+    }
+
+    public Product(int productId, String productName, double productCost, int productQuantity) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productCost = productCost;
+        this.productQuantity = productQuantity;
+        objectCount++;
+    }
+
+    public static int getObjectCount() {
+        return objectCount;
+    }
+
+    public void display() {
+        System.out.printf("Product ID: %d%nProduct Name: %s%nProduct Cost: %.2f%nProduct Quantity: %d%n%n",
+                productId, productName, productCost, productQuantity);
+    }
+}
+
+public class ProductDemo {
+    public static void main(String[] args) {
+        Product product1 = new Product(1, "Laptop", 1200.0, 5);
+        Product product2 = new Product(2, "Smartphone", 800.0, 10);
+        Product product3 = new Product();
+
+        displayProductDetails(product1);
+        displayProductDetails(product2);
+        displayProductDetails(product3);
+
+        System.out.println("Object Count: " + Product.getObjectCount());
+    }
+
+    private static void displayProductDetails(Displayable displayable) {
+        if (displayable instanceof Product) {
+            ((Product) displayable).display();
+        }
+    }
+}
+

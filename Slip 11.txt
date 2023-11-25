@@ -1,0 +1,59 @@
+Q1.
+interface Operation {
+    double volume();
+}
+
+class Cylinder implements Operation {
+    private double radius;
+    private double height;
+    private final double PI = 3.142;
+
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    @Override
+    public double volume() {
+        return PI * radius * radius * height;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Cylinder cylinder = new Cylinder(3.0, 5.0);
+        double volume = cylinder.volume();
+        System.out.println("Volume of the cylinder: " + volume);
+    }
+}
+---------------------------------------------------------------------------
+Q2.
+import java.util.Scanner;
+
+class PasswordMismatchException extends Exception {
+    public PasswordMismatchException(String message) {
+        super(message);
+    }
+}
+
+public class UserAuthentication {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        try {
+            if (!username.equals(password)) {
+                throw new PasswordMismatchException("Invalid Password: Username and Password must match!");
+            } else {
+                System.out.println("Authentication successful!");
+            }
+        } catch (PasswordMismatchException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}

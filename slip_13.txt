@@ -1,0 +1,72 @@
+Slip 13 
+Q1
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileWordLineCounter {
+    public static void main(String[] args) {
+        // Check if a file name is provided as a command line argument
+        if (args.length == 0) {
+            System.out.println("Please provide the file name as a command line argument.");
+            return;
+        }
+
+        String fileName = args[0];
+
+        try {
+            // Read the file and count words and lines
+            int wordCount = 0;
+            int lineCount = 0;
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Count lines
+                    lineCount++;
+
+                    // Count words
+                    String[] words = line.split("\\s+");
+                    wordCount += words.length;
+                }
+            }
+
+            // Display results
+            System.out.println("Number of words in the file: " + wordCount);
+            System.out.println("Number of lines in the file: " + lineCount);
+
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file: " + e.getMessage());
+        }
+    }
+}
+Q2
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateTimeDisplay {
+    public static void main(String[] args) {
+        // Get the current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Format 1: 31/08/2021
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.println("Current date is : " + currentDateTime.format(formatter1));
+
+        // Format 2: 08-31-2021
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        System.out.println("Current date is : " + currentDateTime.format(formatter2));
+
+        // Format 3: Tuesday August 31 2021
+        DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("EEEE MMMM dd yyyy");
+        System.out.println("Current date is : " + currentDateTime.format(formatter3));
+
+        // Format 4: Fri August 31 15:25:59 IST 2021
+        DateTimeFormatter formatter4 = DateTimeFormatter.ofPattern("E MMMM dd HH:mm:ss z yyyy");
+        System.out.println("Current date and time is : " + currentDateTime.format(formatter4));
+
+        // Format 5: 31/08/21 15:25:59 PM +0530
+        DateTimeFormatter formatter5 = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss a Z");
+        System.out.println("Current date and time is : " + currentDateTime.format(formatter5));
+    }
+}

@@ -1,0 +1,151 @@
+Slip 29
+Q1 
+
+Certainly! Below is a simple Java program that creates a `Customer` class with the specified data members and includes a method to search for a customer's name based on the given contact number:
+
+java
+import java.util.Scanner;
+
+public class Customer {
+    private int custNo;
+    private String custName;
+    private String contactNumber;
+    private String custAddr;
+
+    // Constructor
+    public Customer(int custNo, String custName, String contactNumber, String custAddr) {
+        this.custNo = custNo;
+        this.custName = custName;
+        this.contactNumber = contactNumber;
+        this.custAddr = custAddr;
+    }
+
+    // Method to search for customer name based on contact number
+    public static String searchCustomerName(Customer[] customers, String searchContactNumber) {
+        for (Customer customer : customers) {
+            if (customer.contactNumber.equals(searchContactNumber)) {
+                return customer.custName;
+            }
+        }
+        return null; // Return null if not found
+    }
+
+    public static void main(String[] args) {
+        // Create an array of Customer objects
+        Customer[] customers = new Customer[3];
+        customers[0] = new Customer(1, "John Doe", "1234567890", "123 Main St");
+        customers[1] = new Customer(2, "Jane Smith", "9876543210", "456 Oak St");
+        customers[2] = new Customer(3, "Bob Johnson", "5556667777", "789 Pine St");
+
+        // Input contact number to search for
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter contact number to search for: ");
+        String searchContactNumber = scanner.nextLine();
+
+        // Search for customer name and display details
+        String foundCustomerName = searchCustomerName(customers, searchContactNumber);
+        if (foundCustomerName != null) {
+            System.out.println("Customer Name: " + foundCustomerName);
+            // You can also display other details here if needed
+        } else {
+            System.out.println("Customer not found for the given contact number.");
+        }
+    }
+}
+
+Q2 import java.util.Scanner;
+
+class Vehicle {
+    protected String company;
+    protected double price;
+
+    public Vehicle(String company, double price) {
+        this.company = company;
+        this.price = price;
+    }
+
+    public void displayInfo() {
+        System.out.println("Company: " + company);
+        System.out.println("Price: $" + price);
+    }
+}
+
+class LightMotorVehicle extends Vehicle {
+    private double mileage;
+
+    public LightMotorVehicle(String company, double price, double mileage) {
+        super(company, price);
+        this.mileage = mileage;
+    }
+
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Mileage: " + mileage + " km/l");
+    }
+}
+
+class HeavyMotorVehicle extends Vehicle {
+    private double capacityInTons;
+
+    public HeavyMotorVehicle(String company, double price, double capacityInTons) {
+        super(company, price);
+        this.capacityInTons = capacityInTons;
+    }
+
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Capacity: " + capacityInTons + " tons");
+    }
+}
+
+public class VehicleInfoApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of vehicles: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        Vehicle[] vehicles = new Vehicle[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter the type of vehicle (Light/L or Heavy/H): ");
+            String type = scanner.nextLine();
+
+            System.out.print("Enter the company: ");
+            String company = scanner.nextLine();
+
+            System.out.print("Enter the price: $");
+            double price = scanner.nextDouble();
+            scanner.nextLine(); // Consume the newline character
+
+            if (type.equalsIgnoreCase("Light") || type.equalsIgnoreCase("L")) {
+                System.out.print("Enter the mileage: ");
+                double mileage = scanner.nextDouble();
+                scanner.nextLine(); // Consume the newline character
+
+                vehicles[i] = new LightMotorVehicle(company, price, mileage);
+            } else if (type.equalsIgnoreCase("Heavy") || type.equalsIgnoreCase("H")) {
+                System.out.print("Enter the capacity in tons: ");
+                double capacityInTons = scanner.nextDouble();
+                scanner.nextLine(); // Consume the newline character
+
+                vehicles[i] = new HeavyMotorVehicle(company, price, capacityInTons);
+            } else {
+                System.out.println("Invalid vehicle type. Please enter 'Light' or 'Heavy'.");
+                i--; // Decrement i to repeat the input for this iteration
+            }
+        }
+
+        // Display vehicle information
+        System.out.println("\nVehicle Information:");
+        for (Vehicle vehicle : vehicles) {
+            vehicle.displayInfo();
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
