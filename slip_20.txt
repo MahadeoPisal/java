@@ -69,11 +69,30 @@ public class Addition {
 }
 
 // File: Operation/Maximum.java
-package Operation;
+package operation;
 
 public class Maximum {
-    public void max(int num1, int num2) {
-        int max = (num1 > num2) ? num1 : num2;
-        System.out.println("Maximum: " + max);
+    public int max(int a, int b) {
+        return Math.max(a, b);
+    }
+}
+
+
+//main.java
+import operation.Addition;
+import operation.Maximum;
+
+public class Main {
+    public static void main(String[] args) {
+        Addition addObj = new Addition();
+        int sum = addObj.add(5, 3);
+        System.out.println("Sum: " + sum);
+
+        float result = addObj.subtract(8.5f, 3.2f);
+        System.out.println("Subtraction Result: " + result);
+
+        Maximum maxObj = new Maximum();
+        int maximumValue = maxObj.max(10, 7);
+        System.out.println("Maximum Value: " + maximumValue);
     }
 }
