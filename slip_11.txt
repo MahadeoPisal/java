@@ -1,0 +1,90 @@
+Q1
+
+// Interface with method
+interface Operation {
+    double volume();
+}
+
+// Constants interface
+interface Constants {
+    double PI = 3.142;
+}
+
+// Class implementing the Operation interface
+class Cylinder implements Operation {
+    private double radius;
+    private double height;
+
+    // Constructor
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    // Implementation of the volume method
+    @Override
+    public double volume() {
+        return Constants.PI * radius * radius * height;
+    }
+}
+
+// Main class for testing
+public class Main {
+    public static void main(String[] args) {
+        // Creating an object of Cylinder
+        Cylinder cylinder = new Cylinder(2.5, 5.0);
+
+        // Calculating and printing the volume
+        System.out.println("Volume of the cylinder: " + cylinder.volume());
+    }
+}
+
+
+
+
+----------------------------------------------------------------------------------
+Q2
+
+
+Write a program to accept the username and password from user if username and password are
+not same then raise "Invalid Password" with appropriate msg.
+
+
+
+import java.util.Scanner;
+
+public class PasswordValidator {
+    public static void main(String[] args) {
+        try {
+            Scanner scanner = new Scanner(System.in);
+
+            // Accepting username and password
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine();
+
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine();
+
+            // Validating password
+            validatePassword(username, password);
+
+            System.out.println("Password is valid.");
+        } catch (InvalidPasswordException e) {
+            System.out.println("Invalid Password: " + e.getMessage());
+        }
+    }
+
+    private static void validatePassword(String username, String password) throws InvalidPasswordException {
+        if (!username.equals(password)) {
+            throw new InvalidPasswordException("Username and password must be the same.");
+        }
+    }
+}
+
+class InvalidPasswordException extends Exception {
+    public InvalidPasswordException(String message) {
+        super(message);
+    }
+}
+
+
