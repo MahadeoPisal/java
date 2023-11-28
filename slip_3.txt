@@ -35,35 +35,52 @@ public class SortCities {
 
 Q2.
 
-import java.util.Arrays;
-import java.util.Scanner;
+class CovidPositiveException extends Exception {
+    public CovidPositiveException(String message) {
+        super(message);
+    }
+}
 
-public class SortCities {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+class Patient {
+    private String patientName;
+    private int patientAge;
+    private double patientOxyLevel;
+    private int patientHrctReport;
 
-        System.out.print("Enter the number of cities (n): ");
-        int n = scanner.nextInt();
+    public Patient(String name, int age, double oxyLevel, int hrctReport) {
+        this.patientName = name;
+        this.patientAge = age;
+        this.patientOxyLevel = oxyLevel;
+        this.patientHrctReport = hrctReport;
+    }
 
-        // Create an array to store the names of cities
-        String[] cities = new String[n];
-
-        // Input city names
-        System.out.println("Enter the names of cities:");
-
-        for (int i = 0; i < n; i++) {
-            System.out.print("City " + (i + 1) + ": ");
-            cities[i] = scanner.next();
+    public void checkHealthStatus() throws CovidPositiveException {
+        if (patientOxyLevel < 95.0 && patientHrctReport > 10) {
+            throw new CovidPositiveException("Patient is Covid Positive (+) and Needs to be Hospitalized");
+        } else {
+            displayPatientInformation();
         }
+    }
 
-        // Sort the array in ascending order
-        Arrays.sort(cities);
+    private void displayPatientInformation() {
+        System.out.println("Patient Information:");
+        System.out.println("Name: " + patientName);
+        System.out.println("Age: " + patientAge);
+        System.out.println("Oxygen Level: " + patientOxyLevel + "%");
+        System.out.println("HRCT Report: " + patientHrctReport);
+    }
+}
 
-        // Display the sorted city names
-        System.out.println("Cities in ascending order:");
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // Creating a patient object
+            Patient patient1 = new Patient("John Doe", 35, 92.5, 8);
 
-        for (String city : cities) {
-            System.out.println(city);
+            // Checking health status and displaying information
+            patient1.checkHealthStatus();
+        } catch (CovidPositiveException e) {
+            System.out.println("Exception: " + e.getMessage());
         }
     }
 }
