@@ -1,74 +1,34 @@
-Q1.
-public class PrimeNumbersInArray {
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Please provide the array elements as command line arguments.");
-            return;
+Q1
+class Prime {
+    public static void main(String args[]) {
+        int i, j, n;
+        int flag = 0;
+        if (args.length != 1) {
+            System.out.println("Give proper argument for program to run");
+            System.exit(1);
         }
-
-        System.out.println("Prime numbers in the array:");
-
-        // Check each command line argument for primality and print if prime
-        for (String arg : args) {
-            int num = Integer.parseInt(arg);
-            if (isPrime(num)) {
-                System.out.print(num + " ");
+        try {
+            n = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("Give Appropriate Value.");
+            System.exit(1);
+        }
+        int arr[] = new int[n];
+        System.out.println("Enter " + n + " elements");
+        for (i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(System.console().readLine());
+        }
+        for (i = 2; i < arr[n - 1]; i++) {
+            flag = 0;
+            for (j = 0; j < n; j++) {
+                if (arr[j] > i && arr[j] % i == 0) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                System.out.println(i + " is prime");
             }
         }
     }
-
-    // Function to check if a number is prime
-    private static boolean isPrime(int num) {
-        if (num <= 1) {
-            return false;
-        }
-        for (int i = 2; i <= Math.sqrt(num); i++) {
-            if (num % i == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
-
-Q2.
-abstract class Staff {
-    protected int id;
-    protected String name;
-
-    protected Staff(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    abstract void displayDetails();
-}
-
-class OfficeStaff extends Staff {
-    private String department;
-
-    public OfficeStaff(int id, String name, String department) {
-        super(id, name);
-        this.department = department;
-    }
-
-    @Override
-    void displayDetails() {
-        System.out.printf("ID: %d%nName: %s%nDepartment: %s%n%n", id, name, department);
-    }
-}
-
-public class StaffDemo {
-    public static void main(String[] args) {
-        OfficeStaff[] officeStaffArray = {
-                new OfficeStaff(101, "John Doe", "HR"),
-                new OfficeStaff(102, "Jane Smith", "Finance"),
-                new OfficeStaff(103, "Bob Johnson", "IT")
-        };
-
-        for (OfficeStaff staff : officeStaffArray) {
-            staff.displayDetails();
-        }
-    }
-}
-
