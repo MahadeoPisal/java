@@ -1,35 +1,58 @@
 Q1.
 
-import java.util.Arrays;
-import java.util.Scanner;
+class Continent {
+    String continentName;
 
-public class SortCities {
+    public Continent(String continentName) {
+        this.continentName = continentName;
+    }
+
+    public String getContinentName() {
+        return continentName;
+    }
+}
+
+class Country extends Continent {
+    String countryName;
+
+    public Country(String continentName, String countryName) {
+        super(continentName);
+        this.countryName = countryName;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+}
+
+class State extends Country {
+    String stateName;
+    String place;
+
+    public State(String continentName, String countryName, String stateName, String place) {
+        super(continentName, countryName);
+        this.stateName = stateName;
+        this.place = place;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+}
+
+public class MultilevelInheritance {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        State myState = new State("North America", "United States", "New York", "New York City");
 
-        System.out.print("Enter the number of cities (n): ");
-        int n = scanner.nextInt();
-
-        // Create an array to store the names of cities
-        String[] cities = new String[n];
-
-        // Input city names
-        System.out.println("Enter the names of cities:");
-
-        for (int i = 0; i < n; i++) {
-            System.out.print("City " + (i + 1) + ": ");
-            cities[i] = scanner.next();
-        }
-
-        // Sort the array in ascending order
-        Arrays.sort(cities);
-
-        // Display the sorted city names
-        System.out.println("Cities in ascending order:");
-
-        for (String city : cities) {
-            System.out.println(city);
-        }
+        // Displaying place, state, country, and continent
+        System.out.println("Place: " + myState.getPlace());
+        System.out.println("State: " + myState.getStateName());
+        System.out.println("Country: " + myState.getCountryName());
+        System.out.println("Continent: " + myState.getContinentName());
     }
 }
 
